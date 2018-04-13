@@ -6,15 +6,19 @@
     <title>Cut-off hesaplayıcı</title>
     <script>
 
+        String.prototype.replaceAll = function (target, replacement) {
+            return this.split(target).join(replacement);
+        };
+
         var leftTotalCase = 9508;
         var totalVisaLimit = 18300;
         var totalIssuedVisaSoFar = 10500;
 
         function hesapla() {
-            var responseRate = parseInt(document.getElementById("responseRate").value);
-            var derivativeFactor = parseFloat(document.getElementById("derivativeFactor").value);
-            var refusalRate = parseInt(document.getElementById("refusalRate").value);
-            var noShowRate = parseInt(document.getElementById("noShowRate").value);
+            var responseRate = parseInt(document.getElementById("responseRateI").value);
+            var derivativeFactor = parseFloat(document.getElementById("derivativeFactorI").value);
+            var refusalRate = parseInt(document.getElementById("refusalRateI").value);
+            var noShowRate = parseInt(document.getElementById("noShowRateI").value);
 
 
 
@@ -23,41 +27,75 @@
             var issuedLeftTotalCase = (1 - refusalRate / 100) * shownLeftTotalCase;
             var issuedLeftTotalPeople = derivativeFactor * issuedLeftTotalCase;
 
-            document.getElementById("responsiveLeftTotalCase").innerHTML = parseInt(responsiveLeftTotalCase);
-            document.getElementById("shownLeftTotalCase").innerHTML = parseInt(shownLeftTotalCase);
-            document.getElementById("issuedLeftTotalCase").innerHTML = parseInt(issuedLeftTotalCase);
-            document.getElementById("issuedLeftTotalPeople").innerHTML = parseInt(issuedLeftTotalPeople);
+            document.getElementById("responsiveLeftTotalCaseI").innerHTML = parseInt(responsiveLeftTotalCase);
+            document.getElementById("shownLeftTotalCaseI").innerHTML = parseInt(shownLeftTotalCase);
+            document.getElementById("issuedLeftTotalCaseI").innerHTML = parseInt(issuedLeftTotalCase);
+            document.getElementById("issuedLeftTotalPeopleI").innerHTML = parseInt(issuedLeftTotalPeople);
 
             var totalCaseCanGoToInterviewCount = parseInt(((totalVisaLimit - totalIssuedVisaSoFar) / derivativeFactor) / (1 - refusalRate / 100) / (1 - noShowRate / 100) / (responseRate / 100));
-            document.getElementById("totalCaseCanGoToInterview").innerHTML = parseInt(totalCaseCanGoToInterviewCount);
-            
+            document.getElementById("totalCaseCanGoToInterviewI").innerHTML = parseInt(totalCaseCanGoToInterviewCount);
+
+            var isCurrent = false;
             if (issuedLeftTotalPeople < (totalVisaLimit - totalIssuedVisaSoFar)) {
                 document.getElementById("maxEUCN").innerHTML = "<font color='green'><b>CURRENT</b></font>";
+                isCurrent = true;
             } else if (totalCaseCanGoToInterviewCount >= 0 && totalCaseCanGoToInterviewCount < leftTotalCase) {
                 document.getElementById("maxEUCN").innerHTML = orderToCase[totalCaseCanGoToInterviewCount];
+                isCurrent = false;
             } else {
                 document.getElementById("maxEUCN").innerHTML = "Hata var, programcıya bildirin";
             }
+
+
+
+
+            var sonucString = "Sağlaması: <hr /> 18300 den sonra 9508 toplam dosya var. bu dosyalardan 9508 x {responseRate}% = {1} tanesi ds260 doldurmuş. <br />" +
+                "ds260 dolduran dosyalardan {1} x {nonNoShowRate} = {2} tanesi görüşmeye gitmek istiyor. <br /> " +
+                "görüşmeye gitmek isteyen dosyalardan %{refusalRate} ret yiyeceği için {3} dosya onaylanacak <br /> " +
+                "onaylanan {3} dosya akrabalarıyla beraber {3} x {derivativeFactor} = {4} vize eder. <br /> " +
+                "bu dosyalara verilecek vize sayısı {4} ise 10500 + {4} = {5} olup 18300'den";
             
+            sonucString = sonucString.replaceAll("{responseRate}", responseRate);
+            sonucString = sonucString.replaceAll("{1}", parseInt(leftTotalCase * responseRate / 100));
+            sonucString = sonucString.replaceAll("{nonNoShowRate}", parseInt(100 - noShowRate) + "%");
+            sonucString = sonucString.replaceAll("{2}", parseInt(leftTotalCase * responseRate / 100 * (1 - noShowRate / 100)));
+            sonucString = sonucString.replaceAll("{refusalRate}", refusalRate);
+            sonucString = sonucString.replaceAll("{3}", parseInt(leftTotalCase * responseRate / 100 * (1 - noShowRate / 100) * (1 - refusalRate / 100)));
+            sonucString = sonucString.replaceAll("{derivativeFactor}", derivativeFactor);
+            sonucString = sonucString.replaceAll("{4}", parseInt(leftTotalCase * responseRate / 100 * (1 - noShowRate / 100) * (1 - refusalRate / 100) * derivativeFactor));
+            sonucString = sonucString.replaceAll("{5}", parseInt(leftTotalCase * responseRate / 100 * (1 - noShowRate / 100) * (1 - refusalRate / 100) * derivativeFactor) + totalIssuedVisaSoFar);
+            if (isCurrent) {
+                sonucString = sonucString + " küçük olup bölge <font color='green'><b>CURRENT</b></font> olabilmektedir";
+            } else {
+                sonucString = sonucString + " büyük olup bölge CURRENT olamamaktadır";
+            }
+
+            document.getElementById("sonuc").innerHTML = sonucString;
         }
+
+
     </script>
 </head>
 <body>
-    <strong>Case cevap oranı:</strong> <input type="text" id="responseRate" value="60" />  (19590 sonrası için)<br />
-    <strong>Akraba katsayısı:</strong> <input type="text" id="derivativeFactor" value="2.25" />  (19590 sonrası için)<br />
-    <strong>Ret oranı:</strong> <input type="text" id="refusalRate" value="10" /> (19590 sonrası için)<br />
-    <strong>No-show oranı (ds260 doldurup gitmeyen):</strong> <input type="text" id="noShowRate" value="5" /> (19590 sonrası için)<br />
+    <strong>Case cevap oranı:</strong> <input type="text" id="responseRateI" value="60" />  (19590 sonrası için)<br />
+    <strong>Akraba katsayısı:</strong> <input type="text" id="derivativeFactorI" value="2.25" />  (19590 sonrası için)<br />
+    <strong>Ret oranı:</strong> <input type="text" id="refusalRateI" value="10" /> (19590 sonrası için)<br />
+    <strong>No-show oranı (ds260 doldurup gitmeyen):</strong> <input type="text" id="noShowRateI" value="5" /> (19590 sonrası için)<br />
     <input type="button" value="Hesapla" onclick="hesapla()" /><br />
     <br />
-    <strong>Kalan ds260 doldurmuş case:</strong> <span id="responsiveLeftTotalCase"></span><br />
-    <strong>Kalan görüşmeye gitmek isteyen case:</strong> <span id="shownLeftTotalCase"></span><br />
-    <strong>Kalan onaylanabilecek case:</strong> <span id="issuedLeftTotalCase"></span><br />
-    <strong>Current için gereken visa:</strong> <span id="issuedLeftTotalPeople"></span><br />
-    <strong>Görüşmeye gidebilecek case sayısı:</strong> <span id="totalCaseCanGoToInterview"></span><br />
+    <strong>Kalan ds260 doldurmuş case:</strong> <span id="responsiveLeftTotalCaseI"></span><br />
+    <strong>Kalan görüşmeye gitmek isteyen case:</strong> <span id="shownLeftTotalCaseI"></span><br />
+    <strong>Kalan onaylanabilecek case:</strong> <span id="issuedLeftTotalCaseI"></span><br />
+    <strong>Current için gereken visa:</strong> <span id="issuedLeftTotalPeopleI"></span><br />
+    <strong>Görüşmeye gidebilecek case sayısı:</strong> <span id="totalCaseCanGoToInterviewI"></span><br />
     <strong>MAX cut-off:</strong> <span id="maxEUCN"></span><br />
 
 
     <br />
+    <div id="sonuc">
+        
+    </div>
+    
     <div>* Tahmini hesaplama aracıdır, tavsiye değildir. </div>
 
 
