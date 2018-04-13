@@ -49,11 +49,11 @@
 
 
 
-            var sonucString = "Sağlaması: <hr /> 15950 den sonra 9508 toplam dosya var. bu dosyalardan 9508 x {responseRate}% = {1} tanesi ds260 doldurmuş. <br />" +
-                "ds260 dolduran dosyalardan {1} x {nonNoShowRate} = {2} tanesi görüşmeye gitmek istiyor. <br /> " +
-                "görüşmeye gitmek isteyen dosyalardan %{refusalRate} ret yiyeceği için {3} dosya onaylanacak <br /> " +
-                "onaylanan {3} dosya akrabalarıyla beraber {3} x {derivativeFactor} = {4} vize eder. <br /> " +
-                "bu dosyalara verilecek vize sayısı {4} ise 10500 + {4} = {5} olup 18300'den";
+            var sonucString = "Sağlaması: <hr /> EU15950 den sonra 9508 toplam dosya var. Bu dosyalardan 9508 x {responseRate}% = {1} tanesi DS260 doldurmuş. <br />" +
+                "DS260 dolduran dosyalardan {1} x {nonNoShowRate} = {2} tanesi görüşmeye gitmek istiyor. <br /> " +
+                "Görüşmeye gitmek isteyen dosyalardan %{refusalRate} ret yiyeceği için {3} dosya onaylanacak <br /> " +
+                "Onaylanan {3} dosya akrabalarıyla beraber {3} x {derivativeFactor} = {4} vize eder. <br /> " +
+                "Bu dosyalara verilecek vize sayısı {4} ise 10500 + {4} = {5} olup bölge kotası olan 18300'den";
             
             sonucString = sonucString.replaceAll("{responseRate}", responseRate);
             sonucString = sonucString.replaceAll("{1}", parseInt(leftTotalCase * responseRate / 100));
@@ -65,9 +65,9 @@
             sonucString = sonucString.replaceAll("{4}", parseInt(leftTotalCase * responseRate / 100 * (1 - noShowRate / 100) * (1 - refusalRate / 100) * derivativeFactor));
             sonucString = sonucString.replaceAll("{5}", parseInt(leftTotalCase * responseRate / 100 * (1 - noShowRate / 100) * (1 - refusalRate / 100) * derivativeFactor) + totalIssuedVisaSoFar);
             if (isCurrent) {
-                sonucString = sonucString + " küçük olup bölge <font color='green'><b>CURRENT</b></font> olabilmektedir";
+                sonucString = sonucString + " küçük olduğu için bölge <font color='green'><b>CURRENT</b></font> olabilmektedir";
             } else {
-                sonucString = sonucString + " büyük olup bölge CURRENT olamamaktadır. 15950 + (" + totalCaseCanGoToInterviewCount + " GERÇEK CASE) = " + orderToCase[totalCaseCanGoToInterviewCount] + " max cut-off";
+                sonucString = sonucString + " büyük olduğu için bölge CURRENT olamamaktadır. 15950 + (" + totalCaseCanGoToInterviewCount + " GERÇEK CASE) = " + orderToCase[totalCaseCanGoToInterviewCount] + " max cut-off";
             }
 
             document.getElementById("sonuc").innerHTML = sonucString;
