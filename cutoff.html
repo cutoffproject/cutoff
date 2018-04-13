@@ -33,7 +33,14 @@
 
 
             var maxEUCN = orderToCase[parseInt(totalCaseCanGoToInterview)];
-            document.getElementById("maxEUCN").innerHTML = maxEUCN;
+            if (totalCaseCanGoToInterview > 9508) {
+                document.getElementById("maxEUCN").innerHTML = "CURRENT";
+            } else if (totalCaseCanGoToInterview >= 0 && totalCaseCanGoToInterview < 9508) {
+                document.getElementById("maxEUCN").innerHTML = maxEUCN;
+            } else {
+                document.getElementById("maxEUCN").innerHTML = "Hata var, programcıya bildirin";
+            }
+            
         }
     </script>
 </head>
@@ -47,7 +54,7 @@
     <strong>Kalan ds260 doldurmuş case:</strong> <span id="responsiveLeftTotalCase"></span><br />
     <strong>Kalan görüşmeye gitmek isteyen case:</strong> <span id="shownLeftTotalCase"></span><br />
     <strong>Kalan onaylanabilecek case:</strong> <span id="issuedLeftTotalCase"></span><br />
-    <strong>Kalan verilmesi gereken visa:</strong> <span id="issuedLeftTotalPeople"></span><br />
+    <strong>Current için gereken visa:</strong> <span id="issuedLeftTotalPeople"></span><br />
     <strong>Görüşmeye gidebilecek case sayısı:</strong> <span id="totalCaseCanGoToInterview"></span><br />
     <strong>MAX cut-off:</strong> <span id="maxEUCN"></span><br />
 
