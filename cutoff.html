@@ -32,11 +32,11 @@
             document.getElementById("totalCaseCanGoToInterview").innerHTML = parseInt(totalCaseCanGoToInterview);
 
 
-            var maxEUCN = orderToCase[parseInt(totalCaseCanGoToInterview)];
-            if (totalCaseCanGoToInterview > 9508) {
-                document.getElementById("maxEUCN").innerHTML = "CURRENT";
+            
+            if (totalCaseCanGoToInterview > leftTotalCase) {
+                document.getElementById("maxEUCN").innerHTML = "<font color='green'><b>CURRENT</b></font>";
             } else if (totalCaseCanGoToInterview >= 0 && totalCaseCanGoToInterview < 9508) {
-                document.getElementById("maxEUCN").innerHTML = maxEUCN;
+                document.getElementById("maxEUCN").innerHTML = orderToCase[parseInt(totalCaseCanGoToInterview)];
             } else {
                 document.getElementById("maxEUCN").innerHTML = "Hata var, programcıya bildirin";
             }
