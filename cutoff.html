@@ -49,7 +49,7 @@
 
 
 
-            var sonucString = "Sağlaması: <hr /> 18300 den sonra 9508 toplam dosya var. bu dosyalardan 9508 x {responseRate}% = {1} tanesi ds260 doldurmuş. <br />" +
+            var sonucString = "Sağlaması: <hr /> 15950 den sonra 9508 toplam dosya var. bu dosyalardan 9508 x {responseRate}% = {1} tanesi ds260 doldurmuş. <br />" +
                 "ds260 dolduran dosyalardan {1} x {nonNoShowRate} = {2} tanesi görüşmeye gitmek istiyor. <br /> " +
                 "görüşmeye gitmek isteyen dosyalardan %{refusalRate} ret yiyeceği için {3} dosya onaylanacak <br /> " +
                 "onaylanan {3} dosya akrabalarıyla beraber {3} x {derivativeFactor} = {4} vize eder. <br /> " +
@@ -77,10 +77,10 @@
     </script>
 </head>
 <body>
-    <strong>Case cevap oranı:</strong> <input type="text" id="responseRateI" value="60" />  (19590 sonrası için)<br />
-    <strong>Akraba katsayısı:</strong> <input type="text" id="derivativeFactorI" value="2.25" />  (19590 sonrası için)<br />
-    <strong>Ret oranı:</strong> <input type="text" id="refusalRateI" value="10" /> (19590 sonrası için)<br />
-    <strong>No-show oranı (ds260 doldurup gitmeyen):</strong> <input type="text" id="noShowRateI" value="5" /> (19590 sonrası için)<br />
+    <strong>Case cevap oranı:</strong> <input type="text" id="responseRateI" value="60" />  (15950 sonrası için)<br />
+    <strong>Akraba katsayısı:</strong> <input type="text" id="derivativeFactorI" value="2.25" />  (15950 sonrası için)<br />
+    <strong>Ret oranı:</strong> <input type="text" id="refusalRateI" value="10" /> (15950 sonrası için)<br />
+    <strong>No-show oranı (ds260 doldurup gitmeyen):</strong> <input type="text" id="noShowRateI" value="5" /> (15950 sonrası için)<br />
     <input type="button" value="Hesapla" onclick="hesapla()" /><br />
     <br />
     <strong>Kalan ds260 doldurmuş case:</strong> <span id="responsiveLeftTotalCaseI"></span><br />
@@ -93,9 +93,9 @@
 
     <br />
     <div id="sonuc">
-        
+
     </div>
-    
+
     <div>* Tahmini hesaplama aracıdır, tavsiye değildir. </div>
 
 
