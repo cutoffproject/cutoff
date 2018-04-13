@@ -67,7 +67,7 @@
             if (isCurrent) {
                 sonucString = sonucString + " küçük olup bölge <font color='green'><b>CURRENT</b></font> olabilmektedir";
             } else {
-                sonucString = sonucString + " büyük olup bölge CURRENT olamamaktadır";
+                sonucString = sonucString + " büyük olup bölge CURRENT olamamaktadır. 15950 + (" + totalCaseCanGoToInterviewCount + " GERÇEK CASE) = " + orderToCase[totalCaseCanGoToInterviewCount] + " max cut-off";
             }
 
             document.getElementById("sonuc").innerHTML = sonucString;
