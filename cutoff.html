@@ -28,15 +28,13 @@
             document.getElementById("issuedLeftTotalCase").innerHTML = parseInt(issuedLeftTotalCase);
             document.getElementById("issuedLeftTotalPeople").innerHTML = parseInt(issuedLeftTotalPeople);
 
-            var totalCaseCanGoToInterview = ((totalVisaLimit - totalIssuedVisaSoFar) / derivativeFactor) / (1 - refusalRate / 100) / (1 - noShowRate / 100);
-            document.getElementById("totalCaseCanGoToInterview").innerHTML = parseInt(totalCaseCanGoToInterview);
-
-
+            var totalCaseCanGoToInterviewCount = parseInt(((totalVisaLimit - totalIssuedVisaSoFar) / derivativeFactor) / (1 - refusalRate / 100) / (1 - noShowRate / 100) / (responseRate / 100));
+            document.getElementById("totalCaseCanGoToInterview").innerHTML = parseInt(totalCaseCanGoToInterviewCount);
             
-            if (totalCaseCanGoToInterview > leftTotalCase) {
+            if (issuedLeftTotalPeople < (totalVisaLimit - totalIssuedVisaSoFar)) {
                 document.getElementById("maxEUCN").innerHTML = "<font color='green'><b>CURRENT</b></font>";
-            } else if (totalCaseCanGoToInterview >= 0 && totalCaseCanGoToInterview < 9508) {
-                document.getElementById("maxEUCN").innerHTML = orderToCase[parseInt(totalCaseCanGoToInterview)];
+            } else if (totalCaseCanGoToInterviewCount >= 0 && totalCaseCanGoToInterviewCount < leftTotalCase) {
+                document.getElementById("maxEUCN").innerHTML = orderToCase[totalCaseCanGoToInterviewCount];
             } else {
                 document.getElementById("maxEUCN").innerHTML = "Hata var, programcıya bildirin";
             }
